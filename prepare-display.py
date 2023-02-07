@@ -29,7 +29,7 @@ def fixer_nbr_point_fonction(X,Y,n_points,x_min,x_max):
 def analyse_slowly(name):
     model = keras.models.load_model(Lien_dossier + "\\data\\model",compile=False)
     n_inputs = model.input.shape[1]
-    with open(name, newline='') as f:
+    with open(os.getcwd()+"\\data\\"+name, newline='') as f:
         reader = csv.reader(f)
         data = [tuple(row) for row in reader]
     j=0
@@ -37,7 +37,7 @@ def analyse_slowly(name):
     with open('data/results.txt','w') as f:
         f.write('')
     
-    folder = os.getcwd()+'\\figures'
+    folder = os.getcwd()+'\\curves'
     
     for filename in os.listdir(folder):
         if filename.endswith('.png') and '_0' not in filename and '_1' not in filename:
@@ -61,7 +61,7 @@ def analyse_slowly(name):
         
         plt.plot(X,Y,linewidth=0.4)
         plt.title('Tension en fonction du temps pour '+name)
-        plt.savefig(os.path.join(os.getcwd()+"\\figures\\", "courbe_"+str(j//300)+".png"))
+        plt.savefig(os.path.join(os.getcwd()+"\\curves\\", "courbe_"+str(j//300)+".png"))
         plt.clf()
         
         yf = fft(Y)
@@ -70,8 +70,9 @@ def analyse_slowly(name):
         xf,yf = xf[0:len(xf)//30],yf[0:len(yf)//30]
         
         plt.plot(xf,yf,linewidth=0.4)
+        plt.ylim([0,350])
         plt.title('FFT en temps réel '+name)
-        plt.savefig(os.path.join(os.getcwd()+"\\figures\\", "fft_"+str(j//300)+".png"))
+        plt.savefig(os.path.join(os.getcwd()+"\\curves\\", "fft_"+str(j//300)+".png"))
         plt.clf()
         
         xf,yf = fixer_nbr_point_fonction(xf.tolist(),yf.tolist(),n_inputs,0,200)
