@@ -37,7 +37,7 @@ def analyse_slowly(name):
     with open('data/results.txt','w') as f:
         f.write('')
     
-    folder = os.getcwd()+'\\curves'
+    folder = os.getcwd()+'\\images\\curves'
     
     for filename in os.listdir(folder):
         if filename.endswith('.png') and '_0' not in filename and '_1' not in filename:
@@ -61,7 +61,7 @@ def analyse_slowly(name):
         
         plt.plot(X,Y,linewidth=0.4)
         plt.title('Tension en fonction du temps pour '+name)
-        plt.savefig(os.path.join(os.getcwd()+"\\curves\\", "courbe_"+str(j//300)+".png"))
+        plt.savefig(os.path.join(os.getcwd()+"\\images\\curves\\", "courbe_"+str(j//300)+".png"))
         plt.clf()
         
         yf = fft(Y)
@@ -72,7 +72,7 @@ def analyse_slowly(name):
         plt.plot(xf,yf,linewidth=0.4)
         plt.ylim([0,350])
         plt.title('FFT en temps réel '+name)
-        plt.savefig(os.path.join(os.getcwd()+"\\curves\\", "fft_"+str(j//300)+".png"))
+        plt.savefig(os.path.join(os.getcwd()+"\\images\\curves\\", "fft_"+str(j//300)+".png"))
         plt.clf()
         
         xf,yf = fixer_nbr_point_fonction(xf.tolist(),yf.tolist(),n_inputs,0,200)
