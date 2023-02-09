@@ -1,9 +1,9 @@
 # Digital-Twin
 ---
 ## Our project and the IT challenges
-There are two
+There are two:
 <img src="https://github.com/HugoCls/Digital-Twin/tree/main/images/README_IMAGES/differencing_ffts.png?raw=true"  width="100%" height="100%">
-
+![Alt text](https://github.com/HugoCls/Digital-Twin/tree/main/images/README_IMAGES/differencing_ffts.png "Optional title")
 ## The place of AI in the project
 
 ## The final product with graphics
