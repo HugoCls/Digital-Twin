@@ -3,15 +3,14 @@
 ## Our project and the IT challenges
 There are two:
 <img src="https://github.com/HugoCls/Digital-Twin/tree/main/images/README_IMAGES/differencing_ffts.png?raw=true"  width="100%" height="100%">
-![Alt text](https://github.com/HugoCls/Digital-Twin/tree/main/images/README_IMAGES/differencing_ffts.png "Optional title")
-![My Image](images/README_IMAGES/differencing_ffts.png)
+
 ## The place of AI in the project
+
+![My Image](images/README_IMAGES/model_loss.png)
 
 ## The final product with graphics
 
-<img src="https://github.com/HugoCls/Digital-Twin/tree/main/images/README_IMAGES/gui_exemple.png?raw=true"  width="100%" height="100%">
-
-<img src="https://github.com/HugoCls/Digital-Twin/tree/main/images/README_IMAGES/model_loss.png?raw=true"  width="100%" height="100%">
+![My Image](images/README_IMAGES/gui_exemple.png)
 
 
 ## Exemple
