@@ -2,11 +2,11 @@ import tkinter as tk
 import os
 from tkinter import *
 
+#First we load the data from the previous analysis
 with open('data/results.txt','r') as f:
     text_list=f.readlines()
 for i in range(len(text_list)):
-    #print(round(100-100*float(text_list[i].strip('\n')),2))
-    text_list[i]='Chances de casses: '+str(round(100-100*float(text_list[i].strip('\n')),2))+'%.'
+    text_list[i]='Chances of breakdown: '+str(round(100-100*float(text_list[i].strip('\n')),2))+'%.'
     
 N=len(text_list)
 
@@ -49,7 +49,7 @@ fft_list = [tk.PhotoImage(file=os.getcwd()+'\\images\\curves\\fft_'+str(i)+'.png
 fft_label = tk.Label(root)
 fft_label.place(x=500,y=10)
 
-text = tk.Label(root, text='Analysez la qualité de vos ventilateurs',fg='white',bg='black',font=('Times New Roman', 14))
+text = tk.Label(root, text='Analyse the quality of your fans',fg='white',bg='black',font=('Times New Roman', 14))
 text.place(x=50,y=320)
 
 tk.Button(root, text='Generate Curve',fg='white',bg='black', command=gen_curve).pack()

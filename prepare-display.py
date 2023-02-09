@@ -6,8 +6,6 @@ import keras
 import os
 import time
 
-Lien_dossier = os.getcwd()
-
 def fixer_nbr_point_fonction(X,Y,n_points,x_min,x_max):
     x = x_min
     X2 = []
@@ -27,7 +25,7 @@ def fixer_nbr_point_fonction(X,Y,n_points,x_min,x_max):
     return(X2,Y2)
 
 def analyse_slowly(name):
-    model = keras.models.load_model(Lien_dossier + "\\data\\model",compile=False)
+    model = keras.models.load_model(os.getcwd() + "\\data\\model",compile=False)
     n_inputs = model.input.shape[1]
     with open(os.getcwd()+"\\data\\"+name, newline='') as f:
         reader = csv.reader(f)
@@ -60,7 +58,7 @@ def analyse_slowly(name):
         N = len(X)
         
         plt.plot(X,Y,linewidth=0.4)
-        plt.title('Tension en fonction du temps pour '+name)
+        plt.title('Voltage versus time for '+name)
         plt.savefig(os.path.join(os.getcwd()+"\\images\\curves\\", "courbe_"+str(j//300)+".png"))
         plt.clf()
         
@@ -71,7 +69,7 @@ def analyse_slowly(name):
         
         plt.plot(xf,yf,linewidth=0.4)
         plt.ylim([0,350])
-        plt.title('FFT en temps réel '+name)
+        plt.title('FFT in real time '+name)
         plt.savefig(os.path.join(os.getcwd()+"\\images\\curves\\", "fft_"+str(j//300)+".png"))
         plt.clf()
         
