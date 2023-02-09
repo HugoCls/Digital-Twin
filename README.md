@@ -1,21 +1,19 @@
 # Digital-Twin
-
+---
 ## Our project and the IT challenges
 
-<big>**The context**</big>
-***
+### The context
+
 The aim of our project is to be able to **anticipate breakdowns** in **industrial ventilation**.
 
 For this we use a hot wire which acts as an anemometric sensor. When air arrives on the wire, so that its temperature remains constant, a certain **voltage** is delivered and it is this one that we study.
 
 Using this voltage only, we want to know what state the fans in the duct are/will be in.
 
-<big>**Retrieve the data**</big>
-***
+### Retrieve the data
 The acquisition was done using a dantec and we recovered .csv files that we could then use
 
-<big>**Data processing**</big>
-***
+### Data processing
 We can easily get a list of tuples containing (t,U) as here `data=[('0.0001', '1.0684'), ... ,('0.0999', '1.0523'), ('0.1', '1.0602')]`
 
 With `csv.reader`function:
