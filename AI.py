@@ -147,7 +147,7 @@ def create_model(curves = []):
         if(k>= len(curves)//6 and L_estime[k][0]<0.5):
             err += 1
             
-    print(err," erreur, sur ",len(curves)//3, " exemples")
+    print(err," error, on ",len(curves)//3, " exemples")
     model.save("mymodel")
     
     return(err,model,history)
