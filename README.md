@@ -146,5 +146,11 @@ def create_model(curves = []):
 
 
 ## Exemple
-Here is a video of our [application](https://www.youtube.com/watch?v=_6Yb9YLgItU&list=PL_7_H9j4EBUP2sV3jfq105vpyNiUSdNKO&index=3 "Digital-Twin application.").
+Here your can see some demonstrations on the thing in action:
+
+   - [1st version of the app](https://www.youtube.com/watch?v=_6Yb9YLgItU&list=PL_7_H9j4EBUP2sV3jfq105vpyNiUSdNKO&index=3 "Digital-Twin application.")
+   
+   
+   - [2d version of the app](https://youtu.be/pZooMAW_KgA")
+
 
