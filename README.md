@@ -1,4 +1,4 @@
-# Digital-Twin
+# Digital-Twin Project
 ---
 ## Our project and the IT challenges
 
