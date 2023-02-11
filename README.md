@@ -138,6 +138,8 @@ def create_model(curves = []):
     return(err,model,history)
 ```
 
+### Model performance
+
 ![My Image](images/README_IMAGES/model_loss.png)
 
 ## The final product with graphics
