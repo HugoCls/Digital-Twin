@@ -38,7 +38,7 @@ Such parameters are based on the number of points in the file because we had som
 We can easily see now that when comparing both ffts of a broken fan and a clean one,  we can see new frequences 
 ![My Image](images/README_IMAGES/differencing_ffts.png)
 
-And when a blade is removed from the fan, we most of the time see frenquency lines at 50Hz:
+And when a blade is removed from the fan, we most of the time see frenquency lines at 57Hz:
 
 ![My Image](images/README_IMAGES/zoom_on_broken_ffts.png)
 
@@ -49,7 +49,7 @@ Unfortunately, this is not at simple as that and knowing that degradations do no
 The principle is to present cases of degradation to a neural network so that it can train itself and then anticipate a type of degradation.
 
 ### Train a model
-
+***
 For the first AI model we wanted something simple: You enter a curve (points list) and you get as a binary output, if the fan was broken/damaged or not.
 
 #### Choice of model type
