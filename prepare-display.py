@@ -59,6 +59,8 @@ def analyse_slowly(name):
         
         plt.plot(X,Y,linewidth=0.4)
         plt.title('Voltage versus time for '+name)
+        plt.ylabel('Voltage(V)')
+        plt.xlabel('Time(s)')
         plt.savefig(os.path.join(os.getcwd()+"\\images\\curves\\", "courbe_"+str(j//300)+".png"))
         plt.clf()
         
@@ -70,6 +72,8 @@ def analyse_slowly(name):
         plt.plot(xf,yf,linewidth=0.4)
         plt.ylim([0,350])
         plt.title('FFT in real time '+name)
+        plt.ylabel('Voltage(V)')
+        plt.xlabel('Frequency(Hz)')
         plt.savefig(os.path.join(os.getcwd()+"\\images\\curves\\", "fft_"+str(j//300)+".png"))
         plt.clf()
         
