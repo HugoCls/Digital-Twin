@@ -90,8 +90,22 @@ In our case it is to be avoided that a broken fan is not detected as such, so th
 
 #### Mutiply the amount of data
 
+Our 
+```Python
+def random_strip(N,X,Y):
+    L = len(X)
+    x0 = np.random.randint(0,L+1-N)
+    return(X[x0:x0+N],Y[x0:x0+N])
+```
 
+Then when training the data we could easily have several numbers of samples from a single signal.
 
+```Python
+for i in range(1000):
+    X2,Y2 = random_strip(len(X)//2,X,Y)
+     [...]
+    xf,yf=fftfreq(N,SAMPLE_RATE),fft(Y2)
+```
 #### Generate the model
 ```Python
 def create_model(curves = []):
@@ -146,13 +160,16 @@ As we wanted to know the error rate as a function of the type of learning, we ca
 
 With the help of this graph it is easy to understand that overlearning should be avoided for this project.
 
-### Multiple outputs
+### Multi-categorical categorification 
 
-Concept
+With the precedent AI, we can recognize two categories of objects. However, we may have more than 2 categories. This is for example important if we need to diferentiate many differents type of issues.
 
-#### Nouvelle structure
+### New Structure
 
-#### Résultats
+In this case, we change the outputs to be an array of n floats. Where n is the number of categories. We also change the outputs activation fonction, to be "softmax". This activation function make sure that every outputs is beetween 0 and 1, and their sum is equal to 1. So we might consider the output like a probability : The output [0,0.04,0.96] mean that the input is probably of the 3rd category, according to the AI. 
+To finish, we change the metric to be "tf.keras.metrics.CategoricalAccuracy()", wich account for this sort of outputs.
+
+### Results
 
 ## The final product with graphics
 
