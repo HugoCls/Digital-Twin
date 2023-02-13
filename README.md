@@ -90,7 +90,9 @@ In our case it is to be avoided that a broken fan is not detected as such, so th
 
 #### Mutiply the amount of data
 
-Our 
+As the **number of experiments** was limited and required **real-life conditions**, we needed to be able to use a small set of data to the maximum. As we are working on flows, slices of 5 seconds or even one second would be more than sufficient, given the speed of rotation of a blade, which is **greater than 60 Hz**. We therefore split each signal into **sub-samples**, which could allow us to obtain a large number of FFTs, all different, representing different moments of a similar situation, but with periods large enough to be relevant.
+
+By doing this for several different situations (several experiments), we obtained a **large data set**.
 ```Python
 def random_strip(N,X,Y):
     L = len(X)
@@ -106,6 +108,9 @@ for i in range(1000):
      [...]
     xf,yf=fftfreq(N,SAMPLE_RATE),fft(Y2)
 ```
+
+These methods were used in `random_strip` and `fill_in` functions, before generating the model.
+
 #### Generate the model
 ```Python
 def create_model(curves = []):
@@ -164,12 +169,24 @@ With the help of this graph it is easy to understand that overlearning should be
 
 With the precedent AI, we can recognize two categories of objects. However, we may have more than 2 categories. This is for example important if we need to diferentiate many differents type of issues.
 
-### New Structure
+#### New Structure
 
-In this case, we change the outputs to be an array of n floats. Where n is the number of categories. We also change the outputs activation fonction, to be "softmax". This activation function make sure that every outputs is beetween 0 and 1, and their sum is equal to 1. So we might consider the output like a probability : The output [0,0.04,0.96] mean that the input is probably of the 3rd category, according to the AI. 
-To finish, we change the metric to be "tf.keras.metrics.CategoricalAccuracy()", wich account for this sort of outputs.
+In this case, we change the outputs to be an array of n floats where n represents the number of categories. The activation function was altered to `softmax`:
 
-### Results
+```Python
+LAYERS.append(keras.layers.Dense(len(C[2]),activation=tf.keras.activations.softmax))
+```
+
+Which ensures that all outputs are between 0 and 1 and their total sum is equal to 1. 
+
+As a result, they can be viewed as **probabilities** : 
+
+For exemple,`[0,0.04,0.96]` would mean that the model considers the entry to be of the 3rd category. 
+
+
+Note: To accurately assess the performance of the model, the metric used has been changed to `tf.keras.metrics.CategoricalAccuracy()`.
+
+#### Results
 
 ## The final product with graphics
 
