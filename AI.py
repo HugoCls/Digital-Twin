@@ -7,7 +7,7 @@ import tensorflow as tf
 import openpyxl
 import os
 
-def random_tranche(N,X,Y):
+def random_strip(N,X,Y):
     L = len(X)
     x0 = np.random.randint(0,L+1-N)
     return(X[x0:x0+N],Y[x0:x0+N])
@@ -33,7 +33,7 @@ def fill_in(curves):
             # Number of samples in normalized_tone
 
             for i in range(1000):
-                X2,Y2 = random_tranche(len(X)//2,X,Y)
+                X2,Y2 = random_strip(len(X)//2,X,Y)
                 SAMPLE_RATE= np.mean([X2[k+1]-X2[k] for k in range(len(X2)-1)])
                 #DURATION= X2[len(X2)-1]-X[0]
                 N = len(X2)
@@ -152,13 +152,12 @@ def create_model(curves = []):
     
     return(err,model,history)
 
-
-
-def analyse(lien):
-    model = keras.models.load_model(os.getcwd() + "\\data\\model")
+def analyse(file_name):
+    path=os.getcwd()+"\\data\\"+file_name
+    model = keras.models.load_model(os.getcwd() + "\\data\\model\\binary-AI")
     n_inputs = model.input.shape[1]
-    if lien[-3:]=="csv":
-        with open(lien, newline='') as f:
+    if file_name[-3:]=="csv":
+        with open(path, newline='') as f:
             reader = csv.reader(f)
             data = [tuple(row) for row in reader]
         X,Y=[],[]
@@ -172,7 +171,7 @@ def analyse(lien):
         X,Y=np.array(X),np.array(Y)
  
     else:
-        wb = openpyxl.load_workbook(lien)
+        wb = openpyxl.load_workbook(path)
         ws = wb.active
         X,Y=[],[]
         for row in ws.iter_rows(values_only=True):
@@ -198,5 +197,5 @@ def analyse(lien):
     plt.plot(xf,yf,linewidth=0.4)
     plt.savefig("new_img.png")
     xf,yf = fix_number_of_points(xf.tolist(),yf.tolist(),n_inputs,0,200)
-    resultat = model.predict([yf])[0][0]
-    return(resultat)
+    result = model.predict([yf])[0][0]
+    return(result)
