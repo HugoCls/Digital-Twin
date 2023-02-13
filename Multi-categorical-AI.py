@@ -9,38 +9,91 @@ import tensorflow as tf
 import os
 from openpyxl import load_workbook, Workbook
 
-Lien_dossier = "C:/Users/Antoine Daguerre/Downloads/FINAL RECONNAISSANCE"
-
-catégorie = ["neuf","déséquilibré","érraflé"]
+categories = ['new', 'unbalanced', 'scratched']
 
 
 def xlsx_to_csv(path):
-    wb = load_workbook(Lien_dossier+"/" + path)
+    """
+    Changing an xlsx file to a csv file
+
+    Parameters
+    ----------
+    path : str
+        relative path of the file
+
+    """
+    wb = load_workbook(os.getcwd()+"\\data\\" + path)
     ws = wb['Sheet1']
     ws.delete_rows(1,2)
     ws.delete_cols(1,1)
-    wb.save(Lien_dossier+"/" + path)
-    read_file = pd.read_excel(Lien_dossier+"/" + path)
-    read_file.to_csv(Lien_dossier+"/" + path[:-4] + "csv")
-    os.remove(Lien_dossier+"/" + path)
+    wb.save(os.getcwd()+"\\data\\" + path)
+    read_file = pd.read_excel(os.getcwd()+"\\data\\" + path)
+    read_file.to_csv(os.getcwd()+"\\data\\" + path[:-4] + "csv")
+    os.remove(os.getcwd()+"\\data\\" + path)
 
 def folder_xlsx_to_csv():
-    for path in os.listdir(Lien_dossier):
+    """
+    Changing all xlsx files to a csv file in subfolders
+    
+    """
+    for path in os.listdir(os.getcwd()):
         if(path.endswith(".xlsx")):
             print(path)
             xlsx_to_csv(path)
 
 def random_strip(N,X,Y):
+    """
+    Creation of two sub-lists of length N of the two previous lists
+
+    Parameters
+    ----------
+    N : int
+        len of the sublists
+    
+    X : list of floats
+        time/frequency
+        
+    Y : list of floats
+        voltage of the signal
+    Returns
+    ----------
+    X' : lists of floats 
+        sublist of X
+        
+    Y' : lists of floats 
+        sublist of Y with the same corresponding indices
+    """
     L = len(X)
     x0 = np.random.randint(0,L+1-N)
     return(X[x0:x0+N],Y[x0:x0+N])
 
 
 def fill_in(curves):
+    """
+    Creation of two sub-lists of length N of the two previous lists
+
+    Parameters
+    ----------
+    N : int
+        len of the sublists
+    
+    X : list of floats
+        time/frequency
+        
+    Y : list of floats
+        voltage of the signal
+    Returns
+    ----------
+    X' : lists of floats 
+        sublist of X
+        
+    Y' : lists of floats 
+        sublist of Y with the same corresponding indices
+    """
     for name in([("test23_",[1,0,0]),("test24_",[0,1,0]),("test25_",[0,1,0]),("test29_",[0,0,1]),("test31_",[0,0,1]),("test33_",[0,0,1]),("test35_",[0,0,1]),("test39_",[0,0,1]),("test37_",[0,0,1])]):
         for j in range(1,5):
             print(j)
-            with open(Lien_dossier+"/"+name[0]+str(j)+'.csv', newline='') as f:
+            with open(os.getcwd()+"\\data\\"+name[0]+str(j)+'.csv', newline='') as f:
                 reader = csv.reader(f)
                 data = [tuple(row) for row in reader]
             X,Y=[],[]
@@ -71,7 +124,33 @@ def fill_in(curves):
                 curves.append(yf)
                 curves.append(name[1])
 
-def fixer_nbr_point_fonction(X,Y,n_points,x_min,x_max):
+def fix_number_of_points(X,Y,n_points,x_min,x_max):
+    """
+    ?
+
+    Parameters
+    ----------
+    X : list of floats
+        time/frequency
+    
+    Y : list of floats
+        volatage of the signal
+        
+    n_points :?
+        ?
+    x_min : ?
+        ?
+    x_max : ?
+        ?
+        
+    Returns
+    ----------
+    X2 : lists of floats 
+        ?
+        
+    Y2 : lists of floats 
+        ?
+    """
     x = x_min
     X2 = []
     Y2 = []
@@ -100,7 +179,7 @@ def normalise(curves):
     n_max = nb_point_to(curves[0],200)
     couleurs = ['b','g','r','m']
     for k in range(len(curves)//3):
-        (curves[3*k],curves[3*k+1]) = fixer_nbr_point_fonction(curves[3*k].tolist(),curves[3*k+1].tolist(),n_max,np.min(curves[3*k]),200)
+        (curves[3*k],curves[3*k+1]) = fix_number_of_points(curves[3*k].tolist(),curves[3*k+1].tolist(),n_max,np.min(curves[3*k]),200)
 
 def create_model(curves = []):
     if(len(curves) == 0):
@@ -133,8 +212,8 @@ def trouver_model(curves = []):
         fill_in(curves)
         normalise(curves)
     accuracy_max = 0
-    m_actuel = None
-    h_actuel = None
+    m_actual = None
+    h_actual = None
     k = 0
 
     while(accuracy_max < 0.8 and k<200):
@@ -143,9 +222,9 @@ def trouver_model(curves = []):
         (e,m,h) = create_model(curves)
         if(h.history["categorical_accuracy"][9]>accuracy_max):
             accuracy_max = h.history["categorical_accuracy"][9]
-            m_actuel = m
-            h_actuel = h
-    return(accuracy_max,m_actuel,h_actuel)
+            m_actual = m
+            h_actual = h
+    return(accuracy_max,m_actual,h_actual)
 
 def analyse(file_name):
     path=os.getcwd()+"\\data\\"+file_name
@@ -177,15 +256,15 @@ def analyse(file_name):
         yf = np.abs(np.real(yf))
         xf = fftfreq(N, SAMPLE_RATE)
         xf,yf = xf[0:len(xf)//30],yf[0:len(yf)//30]
-        xf,yf = fixer_nbr_point_fonction(xf.tolist(),yf.tolist(),n_inputs,0,200)
+        xf,yf = fix_number_of_points(xf.tolist(),yf.tolist(),n_inputs,0,200)
         L.append(yf)
     plt.plot(xf,yf,linewidth=0.4)
-    plt.savefig("new.png")
+    plt.savefig(os.getcwd()+"\\images\\analysed.png")
     #plt.show()
     predict = model.predict(L)
     result = [0] * n_outputs
     for k in range(50):
         for n in range(n_outputs):
             result[n] += predict[k][n] / 50
-    print("Cet fft appartient à un ventilateur est", catégorie[result.index(max(result))])
+    print("This fan is", categories[result.index(max(result))])
     return(result)
