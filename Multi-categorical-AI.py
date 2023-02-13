@@ -49,19 +49,18 @@ def random_strip(N,X,Y):
     ----------
     N : int
         len of the sublists
-    
     X : list of floats
         time/frequency
-        
     Y : list of floats
         voltage of the signal
+        
     Returns
     ----------
     X' : lists of floats 
-        sublist of X
-        
+        sublist of X 
     Y' : lists of floats 
         sublist of Y with the same corresponding indices
+        
     """
     L = len(X)
     x0 = np.random.randint(0,L+1-N)
@@ -76,19 +75,18 @@ def fill_in(curves):
     ----------
     N : int
         len of the sublists
-    
     X : list of floats
-        time/frequency
-        
+        time/frequency  
     Y : list of floats
         voltage of the signal
+        
     Returns
     ----------
     X' : lists of floats 
-        sublist of X
-        
+        sublist of X   
     Y' : lists of floats 
         sublist of Y with the same corresponding indices
+        
     """
     for name in([("test23_",[1,0,0]),("test24_",[0,1,0]),("test25_",[0,1,0]),("test29_",[0,0,1]),("test31_",[0,0,1]),("test33_",[0,0,1]),("test35_",[0,0,1]),("test39_",[0,0,1]),("test37_",[0,0,1])]):
         for j in range(1,5):
@@ -132,10 +130,8 @@ def fix_number_of_points(X,Y,n_points,x_min,x_max):
     ----------
     X : list of floats
         time/frequency
-    
     Y : list of floats
         volatage of the signal
-        
     n_points :?
         ?
     x_min : ?
@@ -146,8 +142,7 @@ def fix_number_of_points(X,Y,n_points,x_min,x_max):
     Returns
     ----------
     X2 : lists of floats 
-        ?
-        
+        ? 
     Y2 : lists of floats 
         ?
     """
@@ -182,6 +177,20 @@ def normalise(curves):
         (curves[3*k],curves[3*k+1]) = fix_number_of_points(curves[3*k].tolist(),curves[3*k+1].tolist(),n_max,np.min(curves[3*k]),200)
 
 def create_model(curves = []):
+    """
+    Creation of the model used for AI analysis
+
+    Parameters
+    ----------
+    curves : list of prepared signals
+        
+    Returns
+    ----------
+    model : keras.Sequential class
+        the model itself
+    history : Model.history class
+    
+    """
     if(len(curves) == 0):
         fill_in(curves)
         normalise(curves)
@@ -203,11 +212,26 @@ def create_model(curves = []):
         epochs=10,
         verbose=1,
         validation_split = 0.2)
-    err = 0
-    return(err,model,history)
+    return(model,history)
 
 
-def trouver_model(curves = []):
+def find_model(curves = []):
+    """
+    Creation of models with random start until the satisfactory model is obtained to avoid the problem of local maximums
+
+    Parameters
+    ----------
+    curves : list of prepared signals
+        
+    Returns
+    ----------
+    accuracy_max : float between 0 and 1
+        the best accuracy found
+    m_actual : keras.Sequential class
+        the chosen model
+    
+    h_actual : Model.history class
+    """
     if(len(curves) == 0):
         fill_in(curves)
         normalise(curves)
@@ -219,7 +243,7 @@ def trouver_model(curves = []):
     while(accuracy_max < 0.8 and k<200):
         print(k)
         k+=1
-        (e,m,h) = create_model(curves)
+        (m,h) = create_model(curves)
         if(h.history["categorical_accuracy"][9]>accuracy_max):
             accuracy_max = h.history["categorical_accuracy"][9]
             m_actual = m
@@ -227,6 +251,18 @@ def trouver_model(curves = []):
     return(accuracy_max,m_actual,h_actual)
 
 def analyse(file_name):
+    """
+    Analyses a csv file and uses the AI model to predict a broken fan or not, considering the type of failure
+    
+    Parameters
+    ----------
+    file_name : str
+        name of the file
+    Returns
+    ----------
+    result : list of 3 floats between 0 and 1
+        percentage of apartaining to a certain class for each breakage class
+    """
     path=os.getcwd()+"\\data\\"+file_name
     model = keras.models.load_model(os.getcwd() + "\\data\\model\\multi-categorical-AI")
     n_inputs = model.input.shape[1]
