@@ -1,4 +1,4 @@
-# Digital-Twin-Project
+# Digital-Twin
 ---
 ## Our project and the IT challenges
 
@@ -140,7 +140,19 @@ def create_model(curves = []):
 
 ### Model performance
 
+As we wanted to know the error rate as a function of the type of learning, we carried out score tests on the performance.
+
 ![My Image](images/README_IMAGES/model_loss.png)
+
+With the help of this graph it is easy to understand that overlearning should be avoided for this project.
+
+### Multiple outputs
+
+Concept
+
+#### Nouvelle structure
+
+#### Résultats
 
 ## The final product with graphics
 
