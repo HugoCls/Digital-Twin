@@ -69,24 +69,12 @@ def random_strip(N,X,Y):
 
 def fill_in(curves):
     """
-    Creation of two sub-lists of length N of the two previous lists
+    Creation of the desired signals, mutiplying the amount of data
 
     Parameters
     ----------
-    N : int
-        len of the sublists
-    X : list of floats
-        time/frequency  
-    Y : list of floats
-        voltage of the signal
-        
-    Returns
-    ----------
-    X' : lists of floats 
-        sublist of X   
-    Y' : lists of floats 
-        sublist of Y with the same corresponding indices
-        
+    curves : list of float lists
+        initial curves
     """
     for name in([("test23_",[1,0,0]),("test24_",[0,1,0]),("test25_",[0,1,0]),("test29_",[0,0,1]),("test31_",[0,0,1]),("test33_",[0,0,1]),("test35_",[0,0,1]),("test39_",[0,0,1]),("test37_",[0,0,1])]):
         for j in range(1,5):
@@ -124,7 +112,7 @@ def fill_in(curves):
 
 def fix_number_of_points(X,Y,n_points,x_min,x_max):
     """
-    ?
+    Reshapes the curve to decrease or increase its number of points (n points, between x_min and x_max) 
 
     Parameters
     ----------
@@ -132,19 +120,19 @@ def fix_number_of_points(X,Y,n_points,x_min,x_max):
         time/frequency
     Y : list of floats
         volatage of the signal
-    n_points :?
-        ?
-    x_min : ?
-        ?
-    x_max : ?
-        ?
+    n_points : int
+        number of desired points
+    x_min : int
+        the number of points of the smallest curve
+    x_max : int
+        the number of points of the largest curve
         
     Returns
     ----------
     X2 : lists of floats 
-        ? 
+        final time/frequency curve 
     Y2 : lists of floats 
-        ?
+        final voltage curve 
     """
     x = x_min
     X2 = []

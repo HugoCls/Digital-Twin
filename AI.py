@@ -8,11 +8,39 @@ import openpyxl
 import os
 
 def random_strip(N,X,Y):
+    """
+    Creation of two sub-lists of length N of the two previous lists
+
+    Parameters
+    ----------
+    N : int
+        len of the sublists
+    X : list of floats
+        time/frequency
+    Y : list of floats
+        voltage of the signal
+        
+    Returns
+    ----------
+    X' : lists of floats 
+        sublist of X 
+    Y' : lists of floats 
+        sublist of Y with the same corresponding indices
+        
+    """
     L = len(X)
     x0 = np.random.randint(0,L+1-N)
     return(X[x0:x0+N],Y[x0:x0+N])
 
 def fill_in(curves):
+    """
+    Creation of the desired signals, mutiplying the amount of data
+
+    Parameters
+    ----------
+    curves : list of float lists
+        initial curves
+    """
     for nom in([("casse1_",0),("neuf1_",1)]):
         for j in range(1,6):
             print(j)
@@ -108,6 +136,20 @@ def normalise(curves):
 
 
 def create_model(curves = []):
+    """
+    Creation of the model used for AI analysis
+
+    Parameters
+    ----------
+    curves : list of prepared signals
+        
+    Returns
+    ----------
+    model : keras.Sequential class
+        the model itself
+    history : Model.history class
+    
+    """
     if(len(curves) == 0):
         fill_in(curves)
         normalise(curves)
@@ -153,6 +195,18 @@ def create_model(curves = []):
     return(err,model,history)
 
 def analyse(file_name):
+    """
+    Analyses a csv file and uses the AI model to predict if the fan is broken or not
+    
+    Parameters
+    ----------
+    file_name : str
+        name of the file
+    Returns
+    ----------
+    result : float between 0 and 1
+        chances to be broken
+    """
     path=os.getcwd()+"\\data\\"+file_name
     model = keras.models.load_model(os.getcwd() + "\\data\\model\\binary-AI")
     n_inputs = model.input.shape[1]

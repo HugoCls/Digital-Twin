@@ -11,6 +11,10 @@ for i in range(len(text_list)):
 N=len(text_list)
 
 def update_image(image_index):
+    """
+    Updates the images every 100ms so that the interface looks interactive
+    
+    """
     if image_index == len(curves_list) - 1:
         # End of animation, stop updating
         return

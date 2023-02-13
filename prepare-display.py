@@ -6,7 +6,30 @@ import keras
 import os
 import time
 
-def fixer_nbr_point_fonction(X,Y,n_points,x_min,x_max):
+def fix_nbr_of_points(X,Y,n_points,x_min,x_max):
+    """
+    Reshapes the curve to decrease or increase its number of points (n points, between x_min and x_max) 
+
+    Parameters
+    ----------
+    X : list of floats
+        time/frequency
+    Y : list of floats
+        volatage of the signal
+    n_points : int
+        number of desired points
+    x_min : int
+        ?
+    x_max : int
+        ?
+        
+    Returns
+    ----------
+    X2 : lists of floats 
+        final time/frequency curve 
+    Y2 : lists of floats 
+        final voltage curve 
+    """
     x = x_min
     X2 = []
     Y2 = []
@@ -25,6 +48,15 @@ def fixer_nbr_point_fonction(X,Y,n_points,x_min,x_max):
     return(X2,Y2)
 
 def analyse_slowly(name):
+    """
+    Analyses a csv file and uses the AI model to predict a broken fan or not, considering the type of failure
+    Saves all the signals, fft plots as .png files and all the AI results in a .txt called results.txt
+    
+    Parameters
+    ----------
+    name : str
+        name of the file
+    """
     model = keras.models.load_model(os.getcwd() + "\\data\\model",compile=False)
     n_inputs = model.input.shape[1]
     with open(os.getcwd()+"\\data\\"+name, newline='') as f:
@@ -77,7 +109,7 @@ def analyse_slowly(name):
         plt.savefig(os.path.join(os.getcwd()+"\\images\\curves\\", "fft_"+str(j//300)+".png"))
         plt.clf()
         
-        xf,yf = fixer_nbr_point_fonction(xf.tolist(),yf.tolist(),n_inputs,0,200)
+        xf,yf = fix_nbr_of_points(xf.tolist(),yf.tolist(),n_inputs,0,200)
         resultat = model.predict([yf],verbose = 0)[0][0]
         with open('data/results.txt','a') as f:
             f.write(str(resultat)+'\n')
