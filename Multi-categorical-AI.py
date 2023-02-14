@@ -15,7 +15,7 @@ categories = ['new', 'unbalanced', 'scratched']
 def xlsx_to_csv(path):
     """
     Changing an xlsx file to a csv file
-
+ 
     Parameters
     ----------
     path : str
