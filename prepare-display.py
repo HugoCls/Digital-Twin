@@ -9,7 +9,7 @@ import time
 def fix_nbr_of_points(X,Y,n_points,x_min,x_max):
     """
     Reshapes the curve to decrease or increase its number of points (n points, between x_min and x_max) 
-
+ 
     Parameters
     ----------
     X : list of floats
