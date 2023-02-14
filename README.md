@@ -201,6 +201,8 @@ Note: To accurately assess the performance of the model, the metric used has bee
 
 #### Results
 
+It was difficult to obtain satisfactory results for this part, but it is being improved and this technique is promising.
+
 ## The final product with graphics
 
 ![My Image](images/README_IMAGES/gui_exemple.png)
