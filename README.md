@@ -11,7 +11,20 @@ For this we use a hot wire which acts as an anemometric sensor. When air arrives
 Using this voltage only, we want to know what state the fans in the duct are/will be in.
 
 ### Retrieve the data
-The acquisition was done using a dantec and we recovered .csv files that we could then use
+
+The acquisition was performed using the `nidaqmx` module which uses our NIDAQ acquisition card.
+
+We choose the frequency and the acquisition time, then we record 5 excelments one after the other containing the time and voltage data that we will then convert in .csv files to exploit them.
+
+```Python
+df1=pd.DataFrame(Signal1)
+df1.to_excel('signal1.xlsx')
+print('Recording 1 OK')
+[...]
+df5=pd.DataFrame(Signal5)
+df5.to_excel('signal5.xlsx')
+print('Recording 5 OK')
+```
 
 ### Data processing
 We can easily get a list of tuples containing (t,U) as here `data=[('0.0001', '1.0684'), ... ,('0.0999', '1.0523'), ('0.1', '1.0602')]`.
