@@ -10,7 +10,7 @@ import os
 def random_strip(N,X,Y):
     """
     Creation of two sub-lists of length N of the two previous lists
-
+ 
     Parameters
     ----------
     N : int
